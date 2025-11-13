@@ -1,350 +1,661 @@
-# RAG-based-Chatbot (Company-Policies)
+# 🤖 RAG-based Company Policy Chatbot
 
-# 📚 RAG Company Policy Chatbot
+> An intelligent chatbot that answers questions about company policies using Retrieval-Augmented Generation (RAG)
 
-A production-ready Retrieval-Augmented Generation (RAG) chatbot that answers questions about company policies using semantic search and AI-powered responses.
+[![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=flat&logo=python&logoColor=white)](https://www.python.org/)
+[![Streamlit](https://img.shields.io/badge/Streamlit-1.31.0-FF4B4B?style=flat&logo=streamlit&logoColor=white)](https://streamlit.io/)
+[![FAISS](https://img.shields.io/badge/FAISS-Vector_Store-00ADD8?style=flat)](https://github.com/facebookresearch/faiss)
+[![Groq](https://img.shields.io/badge/Groq-LLM-orange?style=flat)](https://groq.com/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
-![Streamlit](https://img.shields.io/badge/Streamlit-1.31.0-red.svg)
-![License](https://img.shields.io/badge/License-MIT-green.svg)
+---
 
-## 🌟 Features
+## 📋 Table of Contents
 
-- ✅ **PDF & Text Document Support** - Ingest company policies in multiple formats
-- ✅ **Semantic Search** - Uses SentenceTransformers embeddings + FAISS vector store
-- ✅ **AI-Powered Responses** - Groq (FREE) or OpenAI integration
-- ✅ **Source Citations** - Shows which documents were used to generate answers
-- ✅ **Conversation Memory** - Maintains context across multiple questions
-- ✅ **Real-time Document Upload** - Add new policies without restarting
-- ✅ **Beautiful UI** - Clean, intuitive Streamlit interface
-- ✅ **Multi-Provider Support** - Free mode, Groq, or OpenAI
+- [Overview](#-overview)
+- [Features](#-features)
+- [Demo](#-demo)
+- [Architecture](#-architecture)
+- [Tech Stack](#-tech-stack)
+- [Installation](#-installation)
+- [Setup & Configuration](#-setup--configuration)
+- [Usage Guide](#-usage-guide)
+- [Project Structure](#-project-structure)
+- [API Keys Setup](#-api-keys-setup)
+- [How It Works](#-how-it-works)
+- [Testing](#-testing)
+- [Troubleshooting](#-troubleshooting)
+- [Contributing](#-contributing)
+- [Author](#-author)
+- [License](#-license)
 
-## 🎥 Demo
+---
 
-![Demo Screenshot](docs/screenshot.png)
+## 🎯 Overview
 
-**Example Queries:**
-- "What is the company's leave policy?"
-- "How can employees request remote work?"
-- "What are the password requirements?"
+This project implements a **production-ready RAG (Retrieval-Augmented Generation) chatbot** that can answer questions about company policies by:
 
-## 🏗️ Architecture
+1. **Reading** PDF and text documents containing company policies
+2. **Embedding** document chunks using semantic search
+3. **Retrieving** the most relevant information using FAISS vector database
+4. **Generating** natural, contextual responses using AI (Groq/OpenAI)
+5. **Citing** source documents for transparency
 
-```
-User Query
-    ↓
-[1] Document Processing (PyPDF2)
-    ↓
-[2] Text Chunking (500 tokens with 50 overlap)
-    ↓
-[3] Embedding Generation (SentenceTransformers)
-    ↓
-[4] Vector Storage (FAISS)
-    ↓
-[5] Semantic Search (Cosine Similarity)
-    ↓
-[6] Context Retrieval (Top-3 chunks)
-    ↓
-[7] LLM Generation (Groq Llama 3.3)
-    ↓
-[8] Response + Citations
-```
+Perfect for HR departments, IT support, or any organization needing automated policy assistance!
 
-## 🚀 Quick Start
+---
+
+## ✨ Features
+
+### Core Features
+- 📄 **Multi-format Support** - PDF and TXT document ingestion
+- 🔍 **Semantic Search** - Uses SentenceTransformers for intelligent retrieval
+- 💾 **Vector Database** - FAISS for fast similarity search
+- 🤖 **AI-Powered** - Groq (FREE) or OpenAI GPT integration
+- 📚 **Source Citations** - Shows which documents were used
+- 💬 **Conversation Memory** - Maintains context across questions
+
+### Additional Features
+- 🎨 **Beautiful UI** - Clean Streamlit interface
+- 📊 **Conversation Stats** - Track questions and topics
+- 💾 **Export Chat** - Download conversation history
+- 🆓 **Free Mode** - Works without API keys (rule-based)
+- 🔄 **Real-time Upload** - Add documents without restart
+- 🎯 **Relevance Scoring** - See how relevant each source is
+
+---
+
+## 📥 Installation
 
 ### Prerequisites
-
 - Python 3.8 or higher
-- pip package manager
-- (Optional) Groq API key for AI responses
+- pip (Python package manager)
+- Git
 
-### Installation
-
-1. **Clone the repository**
+### Step 1: Clone Repository
 ```bash
 git clone https://github.com/yourusername/rag-company-chatbot.git
 cd rag-company-chatbot
 ```
 
-2. **Create virtual environment**
+### Step 2: Create Virtual Environment
 ```bash
-python -m venv venv
-
 # Windows
+python -m venv venv
 venv\Scripts\activate
 
 # Mac/Linux
+python3 -m venv venv
 source venv/bin/activate
 ```
 
-3. **Install dependencies**
+### Step 3: Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-4. **Set up environment variables** (Optional)
+This will install:
+- streamlit (UI framework)
+- openai (LLM API client)
+- sentence-transformers (embeddings)
+- faiss-cpu (vector database)
+- pypdf2 (PDF processing)
+- python-dotenv (environment variables)
+
+---
+
+## ⚙️ Setup & Configuration
+
+### 1. Environment Variables (Optional)
+
+Create a `.env` file in the project root:
+
 ```bash
-# Create .env file
-echo "GROQ_API_KEY=your_key_here" > .env
+# For AI-powered responses (optional)
+GROQ_API_KEY=your_groq_api_key_here
+OPENAI_API_KEY=your_openai_api_key_here
 ```
 
-5. **Add sample documents**
+**Note:** The chatbot works in free mode without API keys!
+
+### 2. Add Policy Documents
+
+Place your company policy documents in the `data/` folder:
+
 ```bash
-# Create data folder and add your policy documents
-mkdir data
-# Add your .txt or .pdf files to data/
+data/
+├── leave_policy.txt
+├── remote_work_policy.txt
+└── it_security_policy.txt
 ```
 
-6. **Run the application**
+Supported formats: `.txt`, `.pdf`
+
+### 3. Run the Application
+
 ```bash
 streamlit run app.py
 ```
 
-7. **Open in browser**
+The app will open automatically at: `http://localhost:8501`
+
+---
+
+## 📖 Usage Guide
+
+### Basic Workflow
+
+**Step 1: Select API Provider**
+
+In the sidebar, choose:
+- **Free Mode** - Rule-based responses (no API key needed)
+- **Groq (FREE!)** - AI-powered with free Groq API
+- **OpenAI** - AI-powered with OpenAI API (paid)
+
+**Step 2: Upload Documents**
+
+1. Click **"Upload Documents"** in sidebar
+2. Select PDF or TXT files from your computer
+3. Click **"🚀 Initialize RAG System"**
+4. Wait for processing (1-2 seconds per document)
+
+**Step 3: Ask Questions**
+
+Type your question in the chat box:
+- "What is the leave policy?"
+- "How can I request remote work?"
+- "What are the password requirements?"
+
+**Step 4: View Results**
+
+- AI-generated answer appears
+- Click **"📚 View Sources"** to see:
+  - Source document names
+  - Relevant text chunks
+  - Relevance scores
+
+### Advanced Features
+
+**Conversation Memory**
+The chatbot remembers your conversation:
 ```
-http://localhost:8501
+You: "What is the leave policy?"
+Bot: [Explains policy]
+
+You: "How many sick days?"  
+Bot: [Understands context, answers about sick leave]
 ```
+
+**Export Chat History**
+1. Click **"💾 Export Chat"** in sidebar
+2. Click **"⬇️ Download Chat History"**
+3. Get a text file with full conversation
+
+**Conversation Stats**
+Sidebar shows:
+- Number of questions asked
+- Number of bot responses
+- Recent questions list
+
+---
 
 ## 📁 Project Structure
 
 ```
 rag-company-chatbot/
-├── app.py                     # Streamlit UI & main application
-├── rag_engine.py              # RAG core logic (embeddings, retrieval, generation)
-├── document_processor.py      # PDF/Text processing & chunking
-├── requirements.txt           # Python dependencies
-├── .env                       # Environment variables (API keys)
-├── .gitignore                # Git ignore file
-├── data/                      # Company policy documents
-│   ├── leave_policy.txt
-│   ├── remote_work_policy.txt
-│   └── it_security_policy.txt
-└── README.md                  # This file
+│
+├── app.py                      # Main Streamlit application
+│   ├── UI components
+│   ├── File upload handling
+│   ├── Chat interface
+│   └── Export functionality
+│
+├── rag_engine.py               # RAG core logic
+│   ├── Embedding generation
+│   ├── FAISS vector store
+│   ├── Retrieval logic
+│   └── LLM integration
+│
+├── document_processor.py       # Document processing
+│   ├── PDF/Text loading
+│   ├── Text cleaning
+│   ├── Chunking algorithm
+│   └── Metadata handling
+│
+├── requirements.txt            # Python dependencies
+├── .env                        # Environment variables (API keys)
+├── .gitignore                 # Git ignore rules
+├── README.md                   # This file
+│
+└── data/                       # Policy documents folder
+    ├── leave_policy.txt
+    ├── remote_work_policy.txt
+    └── it_security_policy.txt
 ```
 
-## 🔑 Getting API Keys
+---
 
-### Groq (Recommended - FREE!)
+## 🔑 API Keys Setup
+
+### Groq API (Recommended - FREE!)
+
+**Why Groq?**
+- ✅ Completely free
+- ✅ 14,400 requests/day
+- ✅ Fast inference
+- ✅ High-quality responses
+
+**Setup Steps:**
 
 1. Visit: https://console.groq.com
-2. Sign up with Google or email
-3. Navigate to API Keys section
-4. Create new API key
-5. Copy and add to `.env` file
+2. Sign up (free account)
+3. Go to **API Keys** section
+4. Click **"Create API Key"**
+5. Copy the key (starts with `gsk_`)
+6. Add to `.env` file:
+   ```
+   GROQ_API_KEY=gsk_your_key_here
+   ```
 
-**Free Tier Limits:**
-- 14,400 requests/day
-- 30 requests/minute
-- Unlimited tokens
+**OR** paste directly in the Streamlit sidebar when running the app.
 
-### OpenAI (Optional)
+### OpenAI API (Optional - Paid)
 
 1. Visit: https://platform.openai.com
-2. Create account
-3. Add payment method
-4. Generate API key
-5. Add to `.env` file
+2. Create account and add payment method
+3. Generate API key
+4. Add to `.env`:
+   ```
+   OPENAI_API_KEY=sk_your_key_here
+   ```
 
-## 🎯 Usage
+---
 
-### Basic Usage
+## 🎥 Demo
 
-1. **Select API Provider**
-   - Free Mode (rule-based responses)
-   - Groq (AI-powered, FREE)
-   - OpenAI (AI-powered, paid)
-
-2. **Upload Documents**
-   - Click "Upload Documents" in sidebar
-   - Select PDF or TXT files
-   - Click "Initialize RAG System"
-
-3. **Ask Questions**
-   - Type your question in chat box
-   - Press Enter or click Send
-   - View AI response with source citations
-
-### Sample Questions
-
+### Screenshot
 ```
-"What is the leave policy?"
-"How many sick days do I get?"
-"How can I request remote work?"
-"What are the password requirements?"
-"Tell me about parental leave"
-"What equipment is provided for remote work?"
+┌─────────────────────────────────────────────────────┐
+│  📚 Company Policy Chatbot                          │
+├─────────────────────────────────────────────────────┤
+│  You: What is the leave policy?                     │
+│                                                     │
+│  Bot: Based on company policies, full-time          │
+│       employees get 20 days annual leave...         │
+│       📚 Sources: leave_policy.txt                  │
+└─────────────────────────────────────────────────────┘
 ```
 
-### Conversation Memory
+### Sample Conversations
+```
+Q: "What is the company's leave policy?"
+A: Provides details about annual, sick, and parental leave with citations
 
-The chatbot remembers your conversation context:
+Q: "How many sick days do I get?"
+A: Understands context and answers specifically about sick leave
+
+Q: "Can I carry them over to next year?"
+A: Remembers "them" refers to sick days, provides accurate answer
+```
+
+---
+
+## 🏗️ Architecture
 
 ```
-You: "What is the leave policy?"
-Bot: [Explains leave policy]
-
-You: "How many sick days?"
-Bot: [Understands context, answers about sick leave]
-
-You: "Can I carry them over?"
-Bot: [Knows "them" = sick days, provides specific answer]
+┌─────────────────────────────────────────────────────────┐
+│                    USER QUERY                           │
+└────────────────────┬────────────────────────────────────┘
+                     ↓
+┌────────────────────────────────────────────────────────┐
+│  DOCUMENT PROCESSING (document_processor.py)           │
+│  • Load PDF/TXT files                                  │
+│  • Clean and normalize text                            │
+│  • Split into chunks (500 tokens, 50 overlap)          │
+└────────────────────┬───────────────────────────────────┘
+                     ↓
+┌────────────────────────────────────────────────────────┐
+│  EMBEDDING GENERATION (rag_engine.py)                  │
+│  • SentenceTransformers (all-MiniLM-L6-v2)            │
+│  • Convert text to 384-dim vectors                     │
+└────────────────────┬───────────────────────────────────┘
+                     ↓
+┌────────────────────────────────────────────────────────┐
+│  VECTOR STORAGE                                        │
+│  • FAISS IndexFlatL2                                   │
+│  • Fast cosine similarity search                       │
+└────────────────────┬───────────────────────────────────┘
+                     ↓
+┌────────────────────────────────────────────────────────┐
+│  RETRIEVAL                                             │
+│  • Search top-3 most relevant chunks                   │
+│  • Calculate relevance scores                          │
+└────────────────────┬───────────────────────────────────┘
+                     ↓
+┌────────────────────────────────────────────────────────┐
+│  GENERATION (LLM)                                      │
+│  • Groq (Llama 3.3-70B) or OpenAI GPT                 │
+│  • Context-aware response generation                   │
+│  • Include conversation history                        │
+└────────────────────┬───────────────────────────────────┘
+                     ↓
+┌────────────────────────────────────────────────────────┐
+│  RESPONSE + CITATIONS                                  │
+│  • Natural language answer                             │
+│  • Source document names                               │
+│  • Relevance scores                                    │
+└────────────────────────────────────────────────────────┘
 ```
+
+---
 
 ## 🛠️ Tech Stack
 
 | Component | Technology | Purpose |
 |-----------|-----------|---------|
-| **LLM** | Groq (Llama 3.3-70B) | Text generation |
-| **Embeddings** | SentenceTransformers | Semantic search |
-| **Vector Store** | FAISS | Efficient similarity search |
-| **Backend** | Python 3.8+ | Core logic |
-| **Frontend** | Streamlit | User interface |
+| **Language** | Python 3.8+ | Core programming language |
+| **UI Framework** | Streamlit 1.31.0 | Interactive web interface |
+| **LLM** | Groq (Llama 3.3-70B) | AI text generation |
+| **Embeddings** | SentenceTransformers | Semantic text encoding |
+| **Vector DB** | FAISS | Similarity search |
 | **PDF Processing** | PyPDF2 | Document parsing |
+| **Environment** | python-dotenv | API key management |
 
-## ⚙️ Configuration
+---
 
-### Customizing Chunk Size
 
-Edit `document_processor.py`:
+## 🔍 How It Works
 
+### 1. Document Processing
 ```python
-processor = DocumentProcessor(
-    chunk_size=500,      # Tokens per chunk
-    chunk_overlap=50     # Overlap between chunks
-)
+# document_processor.py
+1. Load PDF/TXT files
+2. Extract text
+3. Clean and normalize
+4. Split into 500-token chunks with 50-token overlap
+5. Add metadata (source, chunk_id)
 ```
 
-### Changing Embedding Model
-
-Edit `rag_engine.py`:
-
+### 2. Embedding & Storage
 ```python
-RAGEngine(
-    model_name="all-MiniLM-L6-v2"  # Fast, good quality
-    # model_name="all-mpnet-base-v2"  # Slower, better quality
-)
+# rag_engine.py
+1. Convert chunks to 384-dim vectors using SentenceTransformers
+2. Store in FAISS index for fast retrieval
+3. Maintain document metadata
 ```
 
-### Adjusting Retrieval
-
-Edit `app.py`:
-
+### 3. Query Processing
 ```python
-result = st.session_state.rag_engine.query(
-    prompt,
-    top_k=3,  # Number of chunks to retrieve
-    conversation_history=history
-)
+# When user asks a question:
+1. Convert query to embedding vector
+2. Search FAISS for top-3 similar chunks (cosine similarity)
+3. Retrieve relevant text + source documents
 ```
+
+### 4. Response Generation
+```python
+# Generate answer using LLM:
+1. Build context from retrieved chunks
+2. Add conversation history (last 5 messages)
+3. Send to Groq/OpenAI API
+4. Return natural language response + citations
+```
+
+---
+
+## 🧪 Testing
+
+### Sample Test Questions
+
+**Leave Policy:**
+```
+✅ "What is the leave policy?"
+✅ "How many days of annual leave do I get?"
+✅ "Do I need a medical certificate for sick leave?"
+✅ "Can I carry over unused leave?"
+```
+
+**Remote Work:**
+```
+✅ "How can I request remote work?"
+✅ "Am I eligible for remote work?"
+✅ "What equipment is provided?"
+✅ "What are the internet requirements?"
+```
+
+**IT Security:**
+```
+✅ "What are the password requirements?"
+✅ "How often do I need to change my password?"
+✅ "What is the MFA policy?"
+```
+
+**Cross-Document:**
+```
+✅ "Compare leave policy and remote work benefits"
+✅ "What are my options if I want flexibility?"
+```
+
+**Not in Documents:**
+```
+✅ "What is the salary structure?" 
+   → Should say "not available in policies"
+```
+
+### Conversation Memory Test
+```
+Q1: "What is the leave policy?"
+Q2: "How many sick days?"  ← Understands context
+Q3: "Can I carry them over?"  ← Remembers "them" = sick days
+```
+
+---
 
 ## 🐛 Troubleshooting
 
 ### Common Issues
 
-**1. ModuleNotFoundError: No module named 'streamlit'**
+**1. Module Not Found Error**
 ```bash
-# Ensure virtual environment is activated
-venv\Scripts\activate
+ModuleNotFoundError: No module named 'streamlit'
+```
+**Solution:**
+```bash
+# Ensure venv is activated
+venv\Scripts\activate  # Windows
+source venv/bin/activate  # Mac/Linux
+
+# Reinstall dependencies
 pip install -r requirements.txt
 ```
 
-**2. FAISS installation error**
+**2. FAISS Installation Failed**
+```bash
+ERROR: Could not find a version that satisfies faiss-cpu
+```
+**Solution:**
 ```bash
 pip install faiss-cpu --no-cache-dir
+# OR
+pip install faiss-cpu>=1.9.0
 ```
 
-**3. API Error: Model decommissioned**
+**3. Model Decommissioned Error**
+```
+Error: Model llama-3.1-70b-versatile has been decommissioned
+```
+**Solution:**
+Update `rag_engine.py` line ~30:
 ```python
-# Update model name in rag_engine.py
-self.model = "llama-3.3-70b-versatile"
+self.model = "llama-3.3-70b-versatile"  # Use latest model
 ```
 
-**4. PowerShell execution policy error**
+**4. PowerShell Execution Policy**
+```
+cannot be loaded because running scripts is disabled
+```
+**Solution:**
 ```powershell
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
-## 📊 Performance
-
-- **Document Processing:** ~1-2 seconds per document
-- **Embedding Generation:** ~0.5 seconds per query
-- **Vector Search:** <0.1 seconds
-- **LLM Response:** 1-3 seconds (Groq), 3-5 seconds (OpenAI)
-- **Total Response Time:** ~2-5 seconds
-
-## 🔒 Security
-
-- API keys stored in `.env` (not committed to Git)
-- No data stored externally
-- All processing happens locally
-- Session-based conversation memory
-
-## 🚢 Deployment
-
-### Streamlit Cloud (FREE)
-
-1. Push to GitHub
-2. Visit: https://streamlit.io/cloud
-3. Connect repository
-4. Add secrets (API keys)
-5. Deploy!
-
-### Docker (Optional)
-
-```dockerfile
-FROM python:3.9-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-COPY . .
-CMD ["streamlit", "run", "app.py"]
+**5. API Key Not Working**
+```bash
+# Test if key is loaded
+python
+>>> import os
+>>> from dotenv import load_dotenv
+>>> load_dotenv()
+>>> print(os.getenv("GROQ_API_KEY"))
 ```
+
+If returns `None`:
+- Check `.env` file exists in project root
+- Check no extra spaces in key
+- Restart terminal/app
+
+---
+
+## 📊 Performance Metrics
+
+| Operation | Time | Notes |
+|-----------|------|-------|
+| Document Loading | 0.5-1s | Per document |
+| Embedding Generation | 0.3-0.5s | Per query |
+| Vector Search | <0.1s | FAISS indexing |
+| LLM Response (Groq) | 1-2s | Fast inference |
+| LLM Response (OpenAI) | 3-5s | Slower but accurate |
+| **Total Response Time** | **2-6s** | End-to-end |
+
+---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please follow these steps:
+Contributions are welcome! Here's how:
 
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add AmazingFeature'`)
-4. Push to branch (`git push origin feature/AmazingFeature`)
-5. Open Pull Request
+1. **Fork** the repository
+2. **Create** a feature branch
+   ```bash
+   git checkout -b feature/AmazingFeature
+   ```
+3. **Commit** your changes
+   ```bash
+   git commit -m 'Add some AmazingFeature'
+   ```
+4. **Push** to the branch
+   ```bash
+   git push origin feature/AmazingFeature
+   ```
+5. **Open** a Pull Request
 
-## 📝 License
+### Areas for Contribution
+- [ ] Add DOCX file support
+- [ ] Implement multi-language support
+- [ ] Add user authentication
+- [ ] Create REST API endpoints
+- [ ] Add analytics dashboard
+- [ ] Support for ChromaDB/Pinecone
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+---
 
-## 👤 Author
+## 👨‍💻 Author
 
-**Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [Your Profile](https://linkedin.com/in/yourprofile)
-- Email: your.email@example.com
+**Sudeep Mondal**
+
+- 🌐 GitHub: [@yourusername](https://github.com/yourusername)
+- 💼 LinkedIn: [Sudeep Mondal](https://linkedin.com/in/yourprofile)
+- 📧 Email: your.email@example.com
+- 🐦 Twitter: [@yourhandle](https://twitter.com/yourhandle)
+
+---
+
+## 📄 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+```
+MIT License
+
+Copyright (c) 2025 Sudeep Mondal
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+---
 
 ## 🙏 Acknowledgments
 
-- [Streamlit](https://streamlit.io/) for the amazing UI framework
-- [Groq](https://groq.com/) for free, fast LLM inference
-- [Sentence Transformers](https://www.sbert.net/) for embeddings
-- [FAISS](https://github.com/facebookresearch/faiss) for vector search
-- [OpenAI](https://openai.com/) for pioneering LLM technology
+Special thanks to:
+- **Streamlit** - For the amazing UI framework
+- **Groq** - For free, fast LLM inference
+- **Sentence Transformers** - For state-of-the-art embeddings
+- **FAISS** - For efficient vector search
+- **OpenAI** - For pioneering LLM technology
+- **Meta AI** - For Llama models
 
-## 📚 Resources
+---
 
+## 📚 Resources & References
+
+### Documentation
 - [RAG Overview](https://aws.amazon.com/what-is/retrieval-augmented-generation/)
-- [Groq Documentation](https://console.groq.com/docs)
-- [Streamlit Documentation](https://docs.streamlit.io/)
-- [FAISS Tutorial](https://github.com/facebookresearch/faiss/wiki)
+- [Groq API Docs](https://console.groq.com/docs)
+- [Streamlit Docs](https://docs.streamlit.io/)
+- [FAISS Wiki](https://github.com/facebookresearch/faiss/wiki)
+- [Sentence Transformers](https://www.sbert.net/)
+
+### Learning Resources
+- [Building RAG Systems](https://www.pinecone.io/learn/retrieval-augmented-generation/)
+- [Vector Databases Explained](https://www.cloudflare.com/learning/ai/what-is-vector-database/)
+- [LLM Best Practices](https://platform.openai.com/docs/guides/prompt-engineering)
+
+---
 
 ## 🗺️ Roadmap
 
-- [ ] Add support for DOCX files
-- [ ] Implement multi-language support
-- [ ] Add conversation export feature
-- [ ] Create REST API endpoints
-- [ ] Add authentication system
-- [ ] Implement analytics dashboard
-- [ ] Support for multiple vector stores (Chroma, Pinecone)
+### Planned Features
+- [ ] DOCX file support
+- [ ] Multi-language responses (Bengali, Hindi)
+- [ ] User authentication system
+- [ ] REST API endpoints
+- [ ] Analytics dashboard
+- [ ] Conversation export to PDF
+- [ ] Voice input/output
+- [ ] Mobile-responsive UI
+- [ ] Docker containerization
+- [ ] Cloud deployment guide
+
+---
+
+## 📞 Support
+
+If you encounter any issues or have questions:
+
+1. **Check** the [Troubleshooting](#-troubleshooting) section
+2. **Search** existing [GitHub Issues](https://github.com/yourusername/rag-company-chatbot/issues)
+3. **Open** a new issue with:
+   - Clear description
+   - Steps to reproduce
+   - Error messages
+   - System info (OS, Python version)
+
+---
 
 ## ⭐ Star History
 
@@ -354,4 +665,29 @@ If you find this project helpful, please consider giving it a star!
 
 ---
 
-**Made with ❤️ using Python, Streamlit, and AI**
+## 🎓 Educational Purpose
+
+This project was created as part of an **AI Developer assessment** to demonstrate:
+- ✅ Understanding of RAG architecture
+- ✅ LLM integration skills
+- ✅ Vector database implementation
+- ✅ Production-ready code quality
+- ✅ Clear documentation
+
+Feel free to use this as a learning resource or starting point for your own RAG applications!
+
+---
+
+<div align="center">
+
+**Made with ❤️ by Sudeep Mondal**
+
+*Powered by Python, Streamlit, Groq, and AI*
+
+[⬆ Back to Top](#-rag-based-company-policy-chatbot)
+
+</div>
+
+---
+
+**© 2025 Sudeep Mondal. All rights reserved.**
