@@ -1,0 +1,30 @@
+Remote Work Policy
+
+1. Eligibility
+- Employees must have completed 6 months probation
+- Job role must be suitable for remote work
+- Manager approval required
+- Performance reviews must be satisfactory
+
+2. Remote Work Options
+- Full remote: 5 days per week from home
+- Hybrid: 2-3 days remote, 2-3 days office
+- Occasional remote: As needed with prior approval
+
+3. Requirements
+- Reliable internet connection (minimum 25 Mbps)
+- Dedicated workspace
+- Available during core hours (10 AM - 4 PM)
+- Response time: Within 2 hours during work hours
+
+4. Equipment
+- Company laptop provided
+- Monitor and accessories: $500 allowance
+- Internet reimbursement: $50 per month
+- Home office setup: One-time $300 allowance
+
+5. Communication
+- Daily standup meetings via video call
+- Weekly team sync required
+- Slack/Teams must be active during work hours
+- Camera on for meetings unless technical issues

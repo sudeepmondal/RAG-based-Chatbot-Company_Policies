@@ -1,0 +1,33 @@
+IT Security Policy
+
+1. Password Requirements
+- Minimum 12 characters
+- Must include uppercase, lowercase, numbers, and symbols
+- Changed every 90 days
+- No password reuse for last 5 passwords
+- Multi-factor authentication (MFA) mandatory for all systems
+
+2. Device Security
+- Company devices only for work purposes
+- Full disk encryption required
+- Automatic screen lock after 5 minutes
+- Anti-virus software must be kept updated
+- Personal devices require MDM enrollment for company email
+
+3. Data Protection
+- Sensitive data must be encrypted
+- No storing company data on personal cloud storage
+- USB drives must be encrypted and approved
+- Email encryption for confidential information
+
+4. Access Control
+- Principle of least privilege
+- Access reviews quarterly
+- Immediate revocation upon termination
+- Guest access limited to 24 hours
+
+5. Incident Reporting
+- Security incidents must be reported within 1 hour
+- Contact IT security team immediately
+- Do not attempt to resolve security breaches yourself
+- Phishing emails must be reported and deleted
