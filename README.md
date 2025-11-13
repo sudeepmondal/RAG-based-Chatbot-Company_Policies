@@ -45,7 +45,42 @@ Perfect for HR departments, IT support, or any organization needing automated po
 
 ---
 
-## 📥 Installation
+## 📁 Project Structure
+
+```
+rag-company-chatbot/
+│
+├── app.py                      # Main Streamlit application
+│   ├── UI components
+│   ├── File upload handling
+│   ├── Chat interface
+│   └── Export functionality
+│
+├── rag_engine.py               # RAG core logic
+│   ├── Embedding generation
+│   ├── FAISS vector store
+│   ├── Retrieval logic
+│   └── LLM integration
+│
+├── document_processor.py       # Document processing
+│   ├── PDF/Text loading
+│   ├── Text cleaning
+│   ├── Chunking algorithm
+│   └── Metadata handling
+│
+├── requirements.txt            # Python dependencies
+├── .env                        # Environment variables (API keys)
+├── .gitignore                 # Git ignore rules
+├── README.md                   # This file
+│
+└── data/                       # Policy documents folder
+    ├── leave_policy.txt
+    ├── remote_work_policy.txt
+    └── it_security_policy.txt
+
+```
+
+## 📥 Installation Process Step by Step
 
 ### Prerequisites
 - Python 3.8 or higher
@@ -176,42 +211,6 @@ Sidebar shows:
 - Number of questions asked
 - Number of bot responses
 - Recent questions list
-
----
-
-## 📁 Project Structure
-
-```
-rag-company-chatbot/
-│
-├── app.py                      # Main Streamlit application
-│   ├── UI components
-│   ├── File upload handling
-│   ├── Chat interface
-│   └── Export functionality
-│
-├── rag_engine.py               # RAG core logic
-│   ├── Embedding generation
-│   ├── FAISS vector store
-│   ├── Retrieval logic
-│   └── LLM integration
-│
-├── document_processor.py       # Document processing
-│   ├── PDF/Text loading
-│   ├── Text cleaning
-│   ├── Chunking algorithm
-│   └── Metadata handling
-│
-├── requirements.txt            # Python dependencies
-├── .env                        # Environment variables (API keys)
-├── .gitignore                 # Git ignore rules
-├── README.md                   # This file
-│
-└── data/                       # Policy documents folder
-    ├── leave_policy.txt
-    ├── remote_work_policy.txt
-    └── it_security_policy.txt
-```
 
 ---
 
