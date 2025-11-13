@@ -10,26 +10,6 @@
 
 ---
 
-## 📋 Table of Contents
-
-- [Overview](#-overview)
-- [Features](#-features)
-- [Demo](#-demo)
-- [Architecture](#-architecture)
-- [Tech Stack](#-tech-stack)
-- [Installation](#-installation)
-- [Setup & Configuration](#-setup--configuration)
-- [Usage Guide](#-usage-guide)
-- [Project Structure](#-project-structure)
-- [API Keys Setup](#-api-keys-setup)
-- [How It Works](#-how-it-works)
-- [Testing](#-testing)
-- [Troubleshooting](#-troubleshooting)
-- [Contributing](#-contributing)
-- [Author](#-author)
-- [License](#-license)
-
----
 
 ## 🎯 Overview
 
@@ -51,7 +31,7 @@ Perfect for HR departments, IT support, or any organization needing automated po
 - 📄 **Multi-format Support** - PDF and TXT document ingestion
 - 🔍 **Semantic Search** - Uses SentenceTransformers for intelligent retrieval
 - 💾 **Vector Database** - FAISS for fast similarity search
-- 🤖 **AI-Powered** - Groq (FREE) or OpenAI GPT integration
+- 🤖 **AI-Powered** - Groq (FREE) 
 - 📚 **Source Citations** - Shows which documents were used
 - 💬 **Conversation Memory** - Maintains context across questions
 
@@ -96,7 +76,7 @@ pip install -r requirements.txt
 
 This will install:
 - streamlit (UI framework)
-- openai (LLM API client)
+- groq (LLM API client)
 - sentence-transformers (embeddings)
 - faiss-cpu (vector database)
 - pypdf2 (PDF processing)
@@ -562,10 +542,9 @@ Contributions are welcome! Here's how:
 
 **Sudeep Mondal**
 
-- 🌐 GitHub: [@yourusername](https://github.com/yourusername)
-- 💼 LinkedIn: [Sudeep Mondal](https://linkedin.com/in/yourprofile)
-- 📧 Email: your.email@example.com
-- 🐦 Twitter: [@yourhandle](https://twitter.com/yourhandle)
+- 🌐 GitHub: [Sudeep Mondal Deep]([https://github.com/yourusername](https://github.com/sudeepmondal))
+- 💼 LinkedIn: [Sudeep Mondal Deep](https://www.linkedin.com/in/smdeep/)
+- 📧 Email: smdeep137@gmail.com
 
 ---
 
@@ -680,7 +659,7 @@ Feel free to use this as a learning resource or starting point for your own RAG 
 
 <div align="center">
 
-**Made with ❤️ by Sudeep Mondal**
+**Made with ❤️ by Sudeep Mondal Deep**
 
 *Powered by Python, Streamlit, Groq, and AI*
 
@@ -690,4 +669,4 @@ Feel free to use this as a learning resource or starting point for your own RAG 
 
 ---
 
-**© 2025 Sudeep Mondal. All rights reserved.**
+**© 2025 Sudeep Mondal Deep. All rights reserved.**
